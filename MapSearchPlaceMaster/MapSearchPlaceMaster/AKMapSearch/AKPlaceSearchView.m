@@ -81,6 +81,11 @@
 
 @implementation AKPlaceSearchView (SearchView)
 
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    [self endEditing:YES];
+    self.searchAddressTableView.hidden = YES;
+}
+
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     if (searchText.length) {
         self.searchAddressTableView.hidden = NO;
