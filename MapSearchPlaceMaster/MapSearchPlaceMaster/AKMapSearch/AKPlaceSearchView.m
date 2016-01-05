@@ -7,21 +7,24 @@
 //
 
 #import "AKPlaceSearchView.h"
-
+#import "AKCalloutMapAnnotationView.h"
 
 
 @interface AKPlaceSearchView (SearchView)<UISearchBarDelegate>
 @end
 @interface AKPlaceSearchView (SearchTable)<UITableViewDataSource, UITableViewDelegate>
 @end
-@interface AKPlaceSearchView (MapDelegate)
+@interface AKPlaceSearchView (MapDelegate)<MKMapViewDelegate>
 
 @end
 
 @interface AKPlaceSearchView ()
 {
     NSArray *searchAddresses;
+    
 }
+@property (nonatomic, strong) AKMapAnnotation *calloutAnnotation;
+@property (nonatomic, weak) MKAnnotationView *selectedAnnotationView;
 
 @property (weak, nonatomic) IBOutlet UITableView *searchAddressTableView;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
@@ -60,17 +63,72 @@
 
 @implementation AKPlaceSearchView (MapDelegate)
 
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
+    NSLog(@"%s",__FUNCTION__);
+    if ([view isKindOfClass:[AKMapAnnotationView class]]) {
+        AKMapAnnotation *ann = view.annotation;
+        AKMapAnnotationView *annView = (AKMapAnnotationView *)view;
+        if ([annView.dataSource respondsToSelector:@selector(annotationView:CalloutViewForAnnotation:)]) {
+            if (self.calloutAnnotation == nil) {
+                
+                self.calloutAnnotation = [[AKMapAnnotation alloc] initWithLocation:ann.coordinate title:@""];
+                
+            }else {
+                self.calloutAnnotation.coordinate = ann.coordinate;
+            }
+            [self.mapView addAnnotation:self.calloutAnnotation];
+            self.selectedAnnotationView = view;
+        }
+        
+    }
+
+    
+}
+- (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view {
+    
+    if (self.calloutAnnotation) {
+        [self.mapView removeAnnotation: self.calloutAnnotation];
+    }
+}
+
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
     if ([annotation isKindOfClass:[MKUserLocation class]]) {
         return nil;
     }
     AKMapAnnotationView *annView = (AKMapAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"AKAnnotation"];
+    if (annotation == self.calloutAnnotation) {
+        AKCalloutMapAnnotationView *calloutMapAnnotationView = (AKCalloutMapAnnotationView *)[self.mapView dequeueReusableAnnotationViewWithIdentifier:@"CalloutAnnotation"];
+        if (!calloutMapAnnotationView) {
+            calloutMapAnnotationView = [[AKCalloutMapAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"CalloutAnnotation"];
+            
+            UIView *callOutView = [((AKMapAnnotationView *)self.selectedAnnotationView).dataSource annotationView:annView CalloutViewForAnnotation:annView.annotation];
+            CGRect frame = callOutView.frame;
+            if (frame.size.width > self.window.bounds.size.width) {
+                frame.size.width = self.window.bounds.size.width;
+            }
+            if (frame.size.height > self.window.bounds.size.height / 2) {
+                frame.size.height = self.window.bounds.size.height / 2;
+            }
+            callOutView.frame = frame;
+            CGPoint center = callOutView.center;
+            center.x = mapView.bounds.size.width / 2;
+            callOutView.center = center;
+            
+            
+            calloutMapAnnotationView.contentHeight = callOutView.bounds.size.height;
+            [calloutMapAnnotationView.contentView addSubview:callOutView];
+            calloutMapAnnotationView.isClearColor = YES;
+        }
+        calloutMapAnnotationView.parentAnnotationView = self.selectedAnnotationView;
+        calloutMapAnnotationView.mapView = self.mapView;
+        return calloutMapAnnotationView;
+        
+    }
     if (annView == nil) {
         annView = [[AKMapAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"AKAnnotation"];
         annView.dataSource = self.mapAnnotationDataSource;
         annView.delegate = self.mapAnnotationDelegate;
         annView.draggable = YES;
-        annView.canShowCallout = YES;
     }
     AKMapAnnotation *an = (AKMapAnnotation *)annotation;
     annView.place = [[AKPlace alloc] initWithCoordinate:an.coordinate];

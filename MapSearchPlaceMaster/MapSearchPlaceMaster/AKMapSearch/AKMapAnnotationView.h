@@ -12,6 +12,8 @@
 @class AKMapAnnotationView;
 @protocol AKMapAnnotationViewDataSource <NSObject>
 @optional
+- (UIView *)annotationView:(AKMapAnnotationView *)annotationView CalloutViewForAnnotation:(id<MKAnnotation>)annotation;
+
 - (UIView *)annotationView:(AKMapAnnotationView *)annotationView ViewForAnnotation:(id<MKAnnotation>)annotation;
 - (UIImage *)annotationView:(AKMapAnnotationView *)annotationView imageForAnnotation:(id<MKAnnotation>)annotation;
 - (UIImage *)annotationView:(AKMapAnnotationView *)annotationView imageForRightAccessary:(id<MKAnnotation>)annotation;
@@ -26,6 +28,7 @@
 @interface AKMapAnnotationView : MKAnnotationView
 @property (nonatomic, strong) id<AKMapAnnotationViewDataSource> dataSource;
 @property (nonatomic, strong) id<AKMapAnnotationViewDelegate> delegate;
+@property (nonatomic, weak) UIView *callOutView;
 @property (nonatomic, weak) UIView *contentView;
 @property (nonatomic, strong) AKPlace *place;
 @end

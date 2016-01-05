@@ -12,6 +12,7 @@
 @interface AKMapAnnotationView ()
 @property (nonatomic, weak) UIImageView *leftAccessaryImageView;
 @property (nonatomic, weak) UIButton *rightAccessaryButton;
+
 @end
 @implementation AKMapAnnotationView
 
@@ -37,7 +38,7 @@
     self.rightAccessaryButton = rightAccessaryButton;
     self.leftCalloutAccessoryView = imageView;
     self.rightCalloutAccessoryView = rightAccessaryButton;
-    
+    self.layer.borderWidth = 1.0;
     
 #pragma mark - 
     if ([self.dataSource respondsToSelector:@selector(annotationView:ViewForAnnotation:)]) {
@@ -75,16 +76,18 @@
 - (void)setPlace:(AKPlace *)place {
     _place = place;
     [place requestForUpdateWithCompletion:^{
-        NSLog(@"Address = %@",place.addressDictionary);
         AKMapAnnotation *ann = (AKMapAnnotation *)self.annotation;
         ann.title = place.addressDictionary[@"SubLocality"];
         ann.subtitle = place.addressDictionary[@"City"];
     }];
     
 }
-
+- (void)annotationViewDidSelect:(id)sender {
+    NSLog(@"%s",__FUNCTION__);
+}
 - (void)setDataSource:(id<AKMapAnnotationViewDataSource>)dataSource {
     _dataSource = dataSource;
+    
     if ([self.dataSource respondsToSelector:@selector(annotationView:ViewForAnnotation:)]) {
         UIView *contentView = [self.dataSource annotationView:self ViewForAnnotation:self.annotation];
         [self addSubview:contentView];
@@ -106,6 +109,28 @@
     if ([self.dataSource respondsToSelector:@selector(annotationView:imageForRightAccessary:)]) {
         [self.rightAccessaryButton setImage:[self.dataSource annotationView:self imageForRightAccessary:self.annotation] forState:UIControlStateNormal];
     }
+//    if ([self.dataSource respondsToSelector:@selector(annotationView:CalloutViewForAnnotation:)]) {
+//        self.canShowCallout = NO;
+//        UITapGestureRecognizer *tapGuester = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(annotationViewDidSelect:)];
+//        [self.contentView setUserInteractionEnabled:YES];
+//        [self.contentView addGestureRecognizer:tapGuester];
+//        self.callOutView = [self.dataSource annotationView:self CalloutViewForAnnotation:self.annotation];
+//        
+//        CGRect frame = self.frame;
+//        frame.size.height += self.callOutView.bounds.size.height;
+//        frame.size.width = self.callOutView.bounds.size.width;
+//        frame.origin.x = self.callOutView.center.x;
+//        self.frame = frame;
+//        
+//        CGRect calloutViewframe = self.bounds;
+//        calloutViewframe.origin.y = - calloutViewframe.origin.y - 50;
+////        self.callOutView.frame = calloutViewframe;
+//        self.callOutView.alpha = 0.5;
+//        [self addSubview:self.callOutView];
+//    }
+//    else {
+//        self.canShowCallout = YES;
+//    }
 }
 
 - (void)setDragState:(MKAnnotationViewDragState)newDragState animated:(BOOL)animated {
@@ -116,15 +141,17 @@
             break;
         case MKAnnotationViewDragStateEnding: {
             self.dragState = MKAnnotationViewDragStateNone;
-            NSLog(@"content : %@",self.superview);
+            
             AKMapAnnotation *an = (AKMapAnnotation *)self.annotation;
             self.place.location = [[CLLocation alloc] initWithLatitude:an.coordinate.latitude longitude:an.coordinate.longitude];
-
+            __weak AKMapAnnotationView *weakSelf = self;
             [self.place requestForUpdateWithCompletion:^{
-                NSLog(@"Address = %@",self.place.addressDictionary);
-                AKMapAnnotation *ann = (AKMapAnnotation *)self.annotation;
-                ann.title = self.place.addressDictionary[@"SubLocality"];
-                ann.subtitle = self.place.addressDictionary[@"City"];
+                if (![self.dataSource respondsToSelector:@selector(annotationView:ViewForAnnotation:)]) {
+                    AKMapAnnotation *ann = (AKMapAnnotation *)weakSelf.annotation;
+                    ann.title = self.place.addressDictionary[@"SubLocality"];
+                    ann.subtitle = self.place.addressDictionary[@"City"];
+                }
+                
             }];
         }
             

@@ -18,9 +18,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="templateView" destination="ZYm-lh-x08" id="UoU-8X-fd7"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="ZYm-lh-x08">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.75673673850000001" green="1" blue="0.3519287854" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
             </objects>
+            <point key="canvasLocation" x="100.5" y="210"/>
         </scene>
     </scenes>
 </document>

@@ -12,6 +12,9 @@
 
 @interface AKPlaceSearchViewController ()<AKMapAnnotationViewDataSource, AKMapAnnotationViewDelegate>
 
+
+@property (strong, nonatomic) IBOutlet UIView *templateView;
+
 @end
 
 @implementation AKPlaceSearchViewController
@@ -43,6 +46,13 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (UIView *)annotationView:(AKMapAnnotationView *)annotationView CalloutViewForAnnotation:(id<MKAnnotation>)annotation {
+    UIView *view = [[[NSBundle mainBundle] loadNibNamed:@"CallOutView" owner:nil options:nil] firstObject];
+    view.frame = CGRectMake(0, 0, 200, 200);
+    return view;
+}
+
 - (void)annotationView:(AKMapAnnotationView *)annotationView didChangeState:(MKAnnotationViewDragState)dragState {
     AKMapAnnotation *ann = annotationView.annotation;
     NSLog(@"cord : %f, %f", ann.coordinate.latitude, ann.coordinate.longitude);
