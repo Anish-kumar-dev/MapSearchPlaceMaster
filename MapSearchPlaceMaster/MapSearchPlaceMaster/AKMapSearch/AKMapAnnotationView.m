@@ -38,7 +38,7 @@
     self.rightAccessaryButton = rightAccessaryButton;
     self.leftCalloutAccessoryView = imageView;
     self.rightCalloutAccessoryView = rightAccessaryButton;
-    self.layer.borderWidth = 1.0;
+//    self.layer.borderWidth = 1.0;
     
 #pragma mark - 
     if ([self.dataSource respondsToSelector:@selector(annotationView:ViewForAnnotation:)]) {

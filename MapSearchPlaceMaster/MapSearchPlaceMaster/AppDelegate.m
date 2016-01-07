@@ -24,6 +24,8 @@
     self.locationManager = [CLLocationManager new];
     // Set a delegate to receive location callbacks
     self.locationManager.delegate = self;
+
+    
     return YES;
 }
 

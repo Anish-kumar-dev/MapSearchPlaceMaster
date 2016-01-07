@@ -31,6 +31,7 @@
 @end
 @implementation AKPlaceSearchView
 
+
 + (AKPlaceSearchView *)placeSearchView {
     NSArray *nibsArray = [[NSBundle mainBundle] loadNibNamed:@"AKPlaceSearchView" owner:nil options:nil];
     return nibsArray.firstObject;
@@ -129,6 +130,8 @@
         annView.dataSource = self.mapAnnotationDataSource;
         annView.delegate = self.mapAnnotationDelegate;
         annView.draggable = YES;
+        
+        annView.canShowCallout = ![annView.dataSource respondsToSelector:@selector(annotationView:CalloutViewForAnnotation:)];
     }
     AKMapAnnotation *an = (AKMapAnnotation *)annotation;
     annView.place = [[AKPlace alloc] initWithCoordinate:an.coordinate];

@@ -47,11 +47,11 @@
 }
 */
 
-- (UIView *)annotationView:(AKMapAnnotationView *)annotationView CalloutViewForAnnotation:(id<MKAnnotation>)annotation {
-    UIView *view = [[[NSBundle mainBundle] loadNibNamed:@"CallOutView" owner:nil options:nil] firstObject];
-    view.frame = CGRectMake(0, 0, 200, 200);
-    return view;
-}
+//- (UIView *)annotationView:(AKMapAnnotationView *)annotationView CalloutViewForAnnotation:(id<MKAnnotation>)annotation {
+//    UIView *view = [[[NSBundle mainBundle] loadNibNamed:@"CallOutView" owner:nil options:nil] firstObject];
+//    view.frame = CGRectMake(0, 0, 200, 200);
+//    return view;
+//}
 
 - (void)annotationView:(AKMapAnnotationView *)annotationView didChangeState:(MKAnnotationViewDragState)dragState {
     AKMapAnnotation *ann = annotationView.annotation;

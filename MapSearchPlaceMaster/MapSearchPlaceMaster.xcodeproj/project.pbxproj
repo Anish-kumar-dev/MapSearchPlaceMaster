@@ -23,6 +23,7 @@
 		7F2501DD1C3AAC00006FE727 /* pinImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F2501D51C3AAC00006FE727 /* pinImage@2x.png */; };
 		7F2501DE1C3AAC00006FE727 /* place@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F2501D61C3AAC00006FE727 /* place@2x.png */; };
 		7F2501DF1C3AAC00006FE727 /* right_detail_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F2501D71C3AAC00006FE727 /* right_detail_button@2x.png */; };
+		7F2D566A1C3E389F0054639E /* screenshot.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F2D56691C3E389F0054639E /* screenshot.png */; };
 		7FE5728D1C3BA3730055C9F3 /* AKCalloutMapAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FE5728C1C3BA3730055C9F3 /* AKCalloutMapAnnotationView.m */; };
 		7FE572961C3BC37F0055C9F3 /* CallOutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FE572951C3BC37F0055C9F3 /* CallOutView.xib */; };
 /* End PBXBuildFile section */
@@ -52,6 +53,7 @@
 		7F2501D51C3AAC00006FE727 /* pinImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pinImage@2x.png"; path = "AKMapSearch/pinImage@2x.png"; sourceTree = "<group>"; };
 		7F2501D61C3AAC00006FE727 /* place@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "place@2x.png"; path = "AKMapSearch/place@2x.png"; sourceTree = "<group>"; };
 		7F2501D71C3AAC00006FE727 /* right_detail_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "right_detail_button@2x.png"; path = "AKMapSearch/right_detail_button@2x.png"; sourceTree = "<group>"; };
+		7F2D56691C3E389F0054639E /* screenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screenshot.png; sourceTree = "<group>"; };
 		7FE5728B1C3BA3730055C9F3 /* AKCalloutMapAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKCalloutMapAnnotationView.h; path = AKMapSearch/AKCalloutMapAnnotationView.h; sourceTree = "<group>"; };
 		7FE5728C1C3BA3730055C9F3 /* AKCalloutMapAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKCalloutMapAnnotationView.m; path = AKMapSearch/AKCalloutMapAnnotationView.m; sourceTree = "<group>"; };
 		7FE572951C3BC37F0055C9F3 /* CallOutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CallOutView.xib; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 		7F2501AB1C3AAA1A006FE727 /* MapSearchPlaceMaster */ = {
 			isa = PBXGroup;
 			children = (
+				7F2D56691C3E389F0054639E /* screenshot.png */,
 				7F2501E01C3AAC25006FE727 /* AKMapSearch */,
 				7F2501AF1C3AAA1A006FE727 /* AppDelegate.h */,
 				7F2501B01C3AAA1A006FE727 /* AppDelegate.m */,
@@ -199,6 +202,7 @@
 				7F2501DD1C3AAC00006FE727 /* pinImage@2x.png in Resources */,
 				7F2501DE1C3AAC00006FE727 /* place@2x.png in Resources */,
 				7F2501B71C3AAA1A006FE727 /* Main.storyboard in Resources */,
+				7F2D566A1C3E389F0054639E /* screenshot.png in Resources */,
 				7FE572961C3BC37F0055C9F3 /* CallOutView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

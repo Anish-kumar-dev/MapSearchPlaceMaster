@@ -12,7 +12,9 @@
 #import "AKMapAnnotationView.h"
 
 @interface AKPlaceSearchView : UIView
-
+/**
+ @return: Return a view object.
+ */
 + (AKPlaceSearchView *)placeSearchView;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (nonatomic, strong) id<AKMapAnnotationViewDataSource> mapAnnotationDataSource;
